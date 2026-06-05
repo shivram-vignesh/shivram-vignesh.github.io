@@ -18,7 +18,6 @@
             --card-border: rgba(0, 0, 0, 0.04);
             
             --gradient-1: linear-gradient(135deg, rgba(255, 255, 255, 0.7) 0%, rgba(251, 251, 253, 0.6) 100%);
-            --gradient-2: linear-gradient(135deg, rgba(255, 255, 255, 0.8) 0%, rgba(245, 245, 247, 0.7) 100%);
             --gradient-text: linear-gradient(180deg, #1d1d1f 0%, #434344 100%);
             --card-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.04);
             --card-shadow-hover: 0 20px 48px 0 rgba(31, 38, 135, 0.08);
@@ -60,7 +59,6 @@
                 --card-border: rgba(255, 255, 255, 0.06);
                 
                 --gradient-1: linear-gradient(135deg, rgba(28, 28, 30, 0.5) 0%, rgba(18, 18, 18, 0.4) 100%);
-                --gradient-2: linear-gradient(135deg, rgba(34, 34, 34, 0.6) 0%, rgba(22, 22, 22, 0.5) 100%);
                 --gradient-text: linear-gradient(180deg, #ffffff 0%, #aeaeae 100%);
                 --card-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
                 --card-shadow-hover: 0 24px 64px 0 rgba(0, 0, 0, 0.7);
@@ -121,7 +119,7 @@
             display: flex;
             gap: 24px;
             white-space: nowrap;
-            animation: continuous-marquee 85s linear infinite; /* Adjusted speed due to extra metrics */
+            animation: continuous-marquee 85s linear infinite;
             padding-right: 24px;
         }
 
@@ -296,6 +294,7 @@
         .section-title {
             font-size: 24px;
             font-weight: 600;
+            margin-top: 56px;
             margin-bottom: 28px;
             letter-spacing: -0.015em;
         }
@@ -344,10 +343,6 @@
             width: 100%;
         }
 
-        .project-column:nth-child(even) .card {
-            background: var(--gradient-2);
-        }
-
         .card:hover, .small-rect-card:hover {
             transform: translate3d(0, -6px, 0) scale(1.015);
             box-shadow: var(--card-shadow-hover);
@@ -355,7 +350,7 @@
         }
 
         .small-rect-card {
-            background: var(--gradient-2);
+            background: var(--gradient-1);
             backdrop-filter: blur(20px);
             -webkit-backdrop-filter: blur(20px);
             border: 1px solid var(--card-border);
@@ -374,9 +369,69 @@
                         border-color 0.4s ease;
         }
 
+        /* Specialized variant for compact historical story units */
+        .small-rect-card.story-card {
+            height: auto;
+            padding: 16px 24px;
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            justify-content: space-between;
+            gap: 16px;
+        }
+
+        .story-meta {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+            flex: 1;
+        }
+
+        .story-header {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .story-year {
+            font-size: 11px;
+            font-weight: 700;
+            color: var(--text-secondary);
+            letter-spacing: 0.05em;
+        }
+
+        .story-tag {
+            font-size: 10px;
+            font-weight: 600;
+            color: #34c759;
+            background-color: rgba(52, 199, 89, 0.08);
+            padding: 2px 8px;
+            border-radius: 10px;
+            letter-spacing: -0.01em;
+        }
+
+        .story-text {
+            font-size: 14px;
+            font-weight: 600;
+            letter-spacing: -0.015em;
+            color: var(--text-primary);
+            line-height: 1.3;
+        }
+
+        .story-desc {
+            font-size: 12px;
+            color: var(--text-secondary);
+            font-weight: 400;
+            line-height: 1.3;
+        }
+
         @media (max-width: 650px) {
             .small-rect-card {
                 height: 68px;
+            }
+            .small-rect-card.story-card {
+                height: auto;
+                padding: 14px 20px;
             }
         }
 
@@ -481,6 +536,39 @@
             color: #ffffff;
         }
 
+        /* Relaxed Layout Pill Flow System */
+        .drivers-flex-wrap {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 14px;
+            width: 100%;
+        }
+
+        .driver-token {
+            background: var(--gradient-1);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid var(--card-border);
+            padding: 12px 24px;
+            border-radius: 24px;
+            font-size: 16px;
+            font-weight: 600;
+            color: var(--text-primary);
+            box-shadow: var(--card-shadow);
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), 
+                        box-shadow 0.3s cubic-bezier(0.16, 1, 0.3, 1), 
+                        border-color 0.3s ease;
+        }
+
+        .driver-token:hover {
+            transform: translate3d(0, -3px, 0);
+            box-shadow: var(--card-shadow-hover);
+            border-color: var(--accent-blue);
+        }
+
         footer {
             width: 100%;
             max-width: 740px;
@@ -512,7 +600,7 @@
 </head>
 <body>
 
-    <div class="marquee-wrapper" id="global-marquee" style="opacity: 1; transition: opacity 1s ease;">
+    <div class="marquee-wrapper" id="global-marquee">
         <div class="marquee-content" id="marquee-track">
             <span class="metric-cell red">
                 <span class="metric-muted">heart rate:</span> <span class="heartrate-val">74</span> bpm
@@ -591,6 +679,56 @@
                             </a>
                         </div>
                     </div>
+
+                    <a href="https://app.notion.com/p/Future-s-Eyes-3765b7b8715580fe9cfdc5447b20a94e?source=copy_link" target="_blank" class="small-rect-card story-card">
+                        <div class="story-meta">
+                            <div class="story-header">
+                                <span class="story-year">2024</span>
+                                
+                            </div>
+                            <span class="story-text">Future's Eyes</span>
+                            <span class="story-desc">A man who has made a horrible mistake.</span>
+                        </div>
+                        <span class="small-rect-arrow">&rarr;</span>
+                    </a>
+
+                    <a href="https://app.notion.com/p/Designer-s-World-3765b7b8715580a489e9e443b06d78ba?source=copy_link" target="_blank" class="small-rect-card story-card">
+                        <div class="story-meta">
+                            <div class="story-header">
+                                <span class="story-year">2021</span>
+                                
+                            </div>
+                            <span class="story-text">Designer's World</span>
+                            <span class="story-desc">A real smart student creates his own computer world.</span>
+                        </div>
+                        <span class="small-rect-arrow">&rarr;</span>
+                    </a>
+
+                    <a href="https://app.notion.com/p/SPY-1-A-Dark-Figure-3765b7b8715580d5b940db29b13e93c7?source=copy_link" target="_blank" class="small-rect-card story-card">
+                        <div class="story-meta">
+                            <div class="story-header">
+                                <span class="story-year">2018</span>
+                                
+                            </div>
+                            <span class="story-text">SPY - The Dark Figure</span>
+                            <span class="story-desc">This is a spy thriller that totally takes no inspo from Harry Potter.</span>
+                        </div>
+                        <span class="small-rect-arrow">&rarr;</span>
+                    </a>
+
+                    <a href="https://app.notion.com/p/SPY-2-Cloak-Dagger-3765b7b8715580578ee8fee027627762?source=copy_link" target="_blank" class="small-rect-card story-card">
+                        <div class="story-meta">
+                            <div class="story-header">
+                                <span class="story-year">2019</span>
+                                
+                            </div>
+                            <span class="story-text">SPY - Cloak & Dagger</span>
+                            <span class="story-desc">The action is dialled up to an 11 on this one.</span>
+                        </div>
+                        <span class="small-rect-arrow">&rarr;</span>
+                    </a>
+
+                   
                 </div>
 
                 <div class="project-column">
@@ -609,11 +747,95 @@
                     </div>
 
                     <a href="https://app.notion.com/p/Perfectly-Safe-3765b7b87155808cadb7dba7ad1cbc66?source=copy_link" target="_blank" class="small-rect-card">
-                        <span class="small-rect-text">Wanna read an incomplete draft of mine?</span>
+                        <span class="small-rect-text">Wanna read a secret incomplete draft of mine? 🤫</span>
                         <span class="small-rect-arrow">&rarr;</span>
                     </a>
+
+                    <a href="https://app.notion.com/p/Azizam-3765b7b871558069842ff680eaf3d7ac?source=copy_link" target="_blank" class="small-rect-card story-card">
+                        <div class="story-meta">
+                            <div class="story-header">
+                                <span class="story-year">2025</span>
+                                
+                            </div>
+                            <span class="story-text">Azizam</span>
+                            <span class="story-desc">Meeting a familiar face in a cold London night.</span>
+                        </div>
+                        <span class="small-rect-arrow">&rarr;</span>
+                    </a>
+
+                    <a href="https://app.notion.com/p/Skybound-Part-One-3765b7b8715580f5933fd47f5ca0c715?source=copy_link" target="_blank" class="small-rect-card story-card">
+                        <div class="story-meta">
+                            <div class="story-header">
+                                <span class="story-year">2024</span>
+                                
+                            </div>
+                            <span class="story-text">Skybound - Part One</span>
+                            <span class="story-desc">It's set in a floating archipelago. Yeah go read it.</span>
+                        </div>
+                        <span class="small-rect-arrow">&rarr;</span>
+                    </a>
+
+                    <a href="https://app.notion.com/p/Skybound-Part-Two-3765b7b87155804d8a64e88c05bc86f5?source=copy_link" target="_blank" class="small-rect-card story-card">
+                        <div class="story-meta">
+                            <div class="story-header">
+                                <span class="story-year">2024</span>
+                                
+                            </div>
+                            <span class="story-text">Skybound - Part Two</span>
+                            <span class="story-desc">This one is darker than the first one.</span>
+                        </div>
+                        <span class="small-rect-arrow">&rarr;</span>
+                    </a>
+
+                    <a href="https://app.notion.com/p/The-Imperial-Family-3765b7b8715580bfa0b5c789d8ee4a7d?source=copy_link" target="_blank" class="small-rect-card story-card">
+                        <div class="story-meta">
+                            <div class="story-header">
+                                <span class="story-year">2022</span>
+                                
+                            </div>
+                            <span class="story-text">The Imperial Family</span>
+                            <span class="story-desc">This one started because my English teacher wanted something mature and I just went...slavery.</span>
+                        </div>
+                        <span class="small-rect-arrow">&rarr;</span>
+                    </a>
+
+                    <a href="https://app.notion.com/p/The-Enchantress-Palace-3765b7b8715580c286e0e89a2212d933?source=copy_link" target="_blank" class="small-rect-card story-card">
+                        <div class="story-meta">
+                            <div class="story-header">
+                                <span class="story-year">2021</span>
+                                
+                            </div>
+                            <span class="story-text">The Enchantress' Palace</span>
+                            <span class="story-desc">A Sword & Sorcery novel attempt with more ambition than ever.</span>
+                        </div>
+                        <span class="small-rect-arrow">&rarr;</span>
+                    </a>
+
+                    <a href="https://app.notion.com/p/Specs-3765b7b871558036a800f5e8468256b2?source=copy_link" target="_blank" class="small-rect-card story-card">
+                        <div class="story-meta">
+                            <div class="story-header">
+                                <span class="story-year">2018</span>
+                                
+                            </div>
+                            <span class="story-text">Specs</span>
+                            <span class="story-desc">The most utterly stupid dog story ever.</span>
+                        </div>
+                        <span class="small-rect-arrow">&rarr;</span>
+                    </a>
+
+                    
                 </div>
 
+            </div>
+
+            <h2 class="section-title">My Daily Drivers</h2>
+            <div class="drivers-flex-wrap">
+                <div class="driver-token">💻 Dell Inspiron 15</div>
+                <div class="driver-token">🪟 Windows 11</div>
+                <div class="driver-token">🐧 Linux Fedora Workstation 44</div>
+                <div class="driver-token">📱 iPhone 13 Mini</div>
+                <div class="driver-token">⌚ Apple Watch Series 5</div>
+                <div class="driver-token">🎮 PlayStation 5</div>
             </div>
         </main>
     </div>
