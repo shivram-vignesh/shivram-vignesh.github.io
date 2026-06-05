@@ -1,0 +1,700 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shivram Vignesh</title>
+    <style>
+        /* Apple-inspired Modern Design System with Dynamic Background */
+        :root {
+            --bg-gradient: radial-gradient(at 0% 0%, rgba(245, 245, 247, 1) 0px, transparent 50%),
+                           radial-gradient(at 100% 0%, rgba(235, 235, 245, 1) 0px, transparent 50%),
+                           radial-gradient(at 100% 100%, rgba(240, 242, 248, 1) 0px, transparent 50%),
+                           radial-gradient(at 0% 100%, rgba(245, 245, 247, 1) 0px, transparent 50%),
+                           #f5f5f7;
+            
+            --text-primary: #1d1d1f;
+            --text-secondary: #6e6e73;
+            --card-border: rgba(0, 0, 0, 0.04);
+            
+            --gradient-1: linear-gradient(135deg, rgba(255, 255, 255, 0.7) 0%, rgba(251, 251, 253, 0.6) 100%);
+            --gradient-2: linear-gradient(135deg, rgba(255, 255, 255, 0.8) 0%, rgba(245, 245, 247, 0.7) 100%);
+            --gradient-text: linear-gradient(180deg, #1d1d1f 0%, #434344 100%);
+            --card-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.04);
+            --card-shadow-hover: 0 20px 48px 0 rgba(31, 38, 135, 0.08);
+
+            /* Cornflower Blue Adjacent Accent Tones */
+            --accent-blue: #5b84e4;
+            --accent-blue-light: rgba(91, 132, 228, 0.1);
+            
+            /* Clean Minimal Pill Buttons */
+            --btn-bg: rgba(0, 0, 0, 0.05);
+            --btn-text: #1d1d1f;
+            --btn-hover: #5b84e4;
+
+            /* Specific Metric Palette Colors */
+            --metric-red: #ff3b30;
+            --metric-red-light: rgba(255, 59, 48, 0.08);
+            --metric-yellow: #e1b43d;
+            --metric-yellow-light: rgba(225, 180, 61, 0.08);
+
+            /* Custom Marquee Badge Tones */
+            --metric-coffee: #4a3728;
+            --metric-coffee-light: rgba(74, 55, 40, 0.08);
+            --metric-fedora: #3c6eb4;
+            --metric-fedora-light: rgba(60, 110, 180, 0.08);
+            --metric-purple: #8e44ad;
+            --metric-purple-light: rgba(142, 68, 173, 0.08);
+        }
+
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --bg-gradient: radial-gradient(at 0% 0%, rgba(28, 28, 30, 0.6) 0px, transparent 50%),
+                               radial-gradient(at 100% 0%, rgba(10, 10, 12, 0.9) 0px, transparent 50%),
+                               radial-gradient(at 100% 100%, rgba(20, 20, 25, 0.8) 0px, transparent 50%),
+                               radial-gradient(at 0% 100%, rgba(0, 0, 0, 1) 0px, transparent 50%),
+                               #000000;
+
+                --text-primary: #f5f5f7;
+                --text-secondary: #86868b;
+                --card-border: rgba(255, 255, 255, 0.06);
+                
+                --gradient-1: linear-gradient(135deg, rgba(28, 28, 30, 0.5) 0%, rgba(18, 18, 18, 0.4) 100%);
+                --gradient-2: linear-gradient(135deg, rgba(34, 34, 34, 0.6) 0%, rgba(22, 22, 22, 0.5) 100%);
+                --gradient-text: linear-gradient(180deg, #ffffff 0%, #aeaeae 100%);
+                --card-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
+                --card-shadow-hover: 0 24px 64px 0 rgba(0, 0, 0, 0.7);
+
+                /* Dark Theme Variant of Pill Buttons */
+                --btn-bg: rgba(255, 255, 255, 0.1);
+                --btn-text: #f5f5f7;
+                --btn-hover: #7297f1;
+
+                /* Dark mode subtle optimizations for color badges */
+                --metric-coffee: #c6a48a;
+                --metric-coffee-light: rgba(198, 164, 138, 0.12);
+                --metric-fedora: #7ba2db;
+                --metric-fedora-light: rgba(123, 162, 219, 0.12);
+                --metric-purple: #bb8fce;
+                --metric-purple-light: rgba(187, 143, 206, 0.12);
+            }
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background: var(--bg-gradient);
+            background-attachment: fixed;
+            color: var(--text-primary);
+            line-height: 1.47059;
+            letter-spacing: -0.022em;
+            padding: 40px 24px 60px 24px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            -webkit-font-smoothing: antialiased;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        /* Top Bar Infinite Marquee Container */
+        .marquee-wrapper {
+            width: 100vw;
+            overflow: hidden;
+            background: transparent;
+            padding: 12px 0;
+            position: absolute;
+            top: 0;
+            left: 0;
+            display: flex;
+            user-select: none;
+            pointer-events: none;
+            opacity: 0;
+        }
+
+        .marquee-content {
+            display: flex;
+            gap: 24px;
+            white-space: nowrap;
+            animation: continuous-marquee 85s linear infinite; /* Adjusted speed due to extra metrics */
+            padding-right: 24px;
+        }
+
+        @keyframes continuous-marquee {
+            0% { transform: translate3d(0, 0, 0); }
+            100% { transform: translate3d(-50%, 0, 0); }
+        }
+
+        /* Reusable Metric Cell Token System */
+        .metric-cell {
+            font-size: 13px;
+            font-weight: 600;
+            padding: 6px 14px;
+            border-radius: 20px;
+            display: inline-flex;
+            align-items: center;
+            letter-spacing: -0.01em;
+            gap: 6px;
+        }
+
+        .metric-cell.red {
+            color: var(--metric-red);
+            background-color: var(--metric-red-light);
+        }
+
+        .metric-cell.yellow {
+            color: var(--metric-yellow);
+            background-color: var(--metric-yellow-light);
+        }
+
+        .metric-cell.blue {
+            color: var(--accent-blue);
+            background-color: var(--accent-blue-light);
+        }
+
+        .metric-cell.coffee {
+            color: var(--metric-coffee);
+            background-color: var(--metric-coffee-light);
+        }
+
+        .metric-cell.fedora {
+            color: var(--metric-fedora);
+            background-color: var(--metric-fedora-light);
+        }
+
+        .metric-cell.purple {
+            color: var(--metric-purple);
+            background-color: var(--metric-purple-light);
+        }
+
+        .metric-muted {
+            opacity: 0.6;
+            font-weight: 500;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 740px;
+            flex: 1;
+            margin-top: 60px;
+        }
+
+        header {
+            margin-bottom: 72px;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+        }
+
+        .profile-img {
+            width: 140px;
+            height: 140px;
+            border-radius: 36px;
+            object-fit: cover;
+            margin-bottom: 28px;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.06);
+            border: 1px solid var(--card-border);
+            opacity: 0;
+            will-change: transform, opacity;
+        }
+
+        .profile-img.visible {
+            opacity: 1;
+            transition: opacity 1.2s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        h1 {
+            font-size: 64px;
+            font-weight: 700;
+            letter-spacing: -0.03em;
+            line-height: 1.05;
+            margin-bottom: 12px;
+            background: var(--gradient-text);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            display: inline-block;
+            transform-origin: left top;
+            opacity: 0;
+            will-change: transform, opacity;
+        }
+
+        h1.animate-up {
+            opacity: 1;
+            transition: transform 1.3s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.4s ease-out;
+        }
+
+        .fade-in-content {
+            opacity: 0;
+            transform: translate3d(0, 15px, 0);
+            will-change: opacity, transform;
+        }
+
+        .fade-in-content.visible {
+            opacity: 1;
+            transform: translate3d(0, 0, 0);
+            transition: transform 1.2s cubic-bezier(0.16, 1, 0.3, 1), opacity 1.2s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .meta-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 16px;
+            margin-bottom: 32px;
+            width: 100%;
+            flex-wrap: wrap;
+        }
+
+        .meta-text {
+            font-size: 21px;
+            color: var(--text-secondary);
+            font-weight: 500;
+            letter-spacing: -0.011em;
+        }
+
+        .contact-inline-grid {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+
+        .pill-card {
+            background: var(--btn-bg);
+            border: 1px solid transparent;
+            padding: 6px 16px;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--btn-text);
+            text-decoration: none;
+            letter-spacing: -0.01em;
+            display: inline-flex;
+            align-items: center;
+            transition: background-color 0.25s ease, color 0.25s ease, transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .pill-card:hover {
+            background-color: var(--btn-hover);
+            color: #ffffff;
+            transform: translate3d(0, -1px, 0);
+        }
+
+        .tagline {
+            font-size: 24px;
+            font-weight: 500;
+            color: var(--text-primary);
+            letter-spacing: -0.02em;
+            line-height: 1.3;
+            max-width: 600px;
+        }
+
+        .section-title {
+            font-size: 24px;
+            font-weight: 600;
+            margin-bottom: 28px;
+            letter-spacing: -0.015em;
+        }
+
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 28px;
+        }
+
+        .project-column {
+            display: flex;
+            flex-direction: column;
+            gap: 28px;
+        }
+
+        @media (max-width: 650px) {
+            .projects-grid {
+                grid-template-columns: 1fr;
+            }
+            .meta-row {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 14px;
+            }
+            h1 {
+                font-size: 44px;
+            }
+        }
+
+        .card {
+            background: var(--gradient-1);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid var(--card-border);
+            padding: 36px;
+            border-radius: 32px;
+            aspect-ratio: 1 / 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), 
+                        box-shadow 0.4s cubic-bezier(0.16, 1, 0.3, 1),
+                        border-color 0.4s ease;
+            box-shadow: var(--card-shadow);
+            width: 100%;
+        }
+
+        .project-column:nth-child(even) .card {
+            background: var(--gradient-2);
+        }
+
+        .card:hover, .small-rect-card:hover {
+            transform: translate3d(0, -6px, 0) scale(1.015);
+            box-shadow: var(--card-shadow-hover);
+            border-color: var(--accent-blue);
+        }
+
+        .small-rect-card {
+            background: var(--gradient-2);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid var(--card-border);
+            padding: 0 36px; 
+            height: 76px; 
+            border-radius: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            text-decoration: none;
+            color: var(--text-primary);
+            box-shadow: var(--card-shadow);
+            width: 100%;
+            transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), 
+                        box-shadow 0.4s cubic-bezier(0.16, 1, 0.3, 1),
+                        border-color 0.4s ease;
+        }
+
+        @media (max-width: 650px) {
+            .small-rect-card {
+                height: 68px;
+            }
+        }
+
+        .small-rect-text {
+            font-size: 15px;
+            font-weight: 600;
+            letter-spacing: -0.015em;
+        }
+
+        .small-rect-arrow {
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--text-secondary);
+            transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), color 0.3s ease;
+        }
+
+        .small-rect-card:hover .small-rect-arrow {
+            transform: translate3d(4px, 0, 0);
+            color: var(--accent-blue);
+        }
+
+        .card-top {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .card-year {
+            font-size: 13px;
+            color: var(--text-secondary);
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            margin-bottom: 8px;
+        }
+
+        .card-title {
+            font-size: 24px;
+            font-weight: 700;
+            letter-spacing: -0.02em;
+            line-height: 1.2;
+        }
+
+        .card-description {
+            font-size: 15px;
+            color: var(--text-secondary);
+            margin-top: 14px;
+            line-height: 1.45;
+            display: -webkit-box;
+            -webkit-line-clamp: 3; 
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+            margin-bottom: 16px;
+        }
+
+        .card-bottom {
+            margin-top: auto;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        .card-progress {
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--accent-blue);
+            background-color: var(--accent-blue-light);
+            padding: 6px 14px;
+            border-radius: 20px;
+            display: inline-flex;
+            align-items: center;
+            letter-spacing: -0.01em;
+        }
+
+        .card-progress.completed {
+            color: #34c759;
+            background-color: rgba(52, 199, 89, 0.08);
+        }
+        
+        .card-progress.planning {
+            color: #ff9500;
+            background-color: rgba(255, 149, 0, 0.08);
+        }
+
+        .card-action-pill {
+            font-size: 12px;
+            font-weight: 600;
+            text-decoration: none;
+            padding: 6px 14px;
+            border-radius: 20px;
+            letter-spacing: -0.01em;
+            display: inline-flex;
+            align-items: center;
+            background-color: var(--btn-bg);
+            color: var(--btn-text);
+            transition: background-color 0.2s ease, color 0.2s ease;
+        }
+
+        .card-action-pill:hover {
+            background-color: var(--accent-blue);
+            color: #ffffff;
+        }
+
+        footer {
+            width: 100%;
+            max-width: 740px;
+            margin-top: 100px;
+            padding-top: 24px;
+            border-top: 1px solid var(--card-border);
+            text-align: center;
+        }
+
+        .footer-text {
+            font-size: 14px;
+            color: var(--text-secondary);
+            font-weight: 500;
+            letter-spacing: -0.01em;
+        }
+
+        .footer-link {
+            color: var(--accent-blue);
+            text-decoration: none;
+            font-weight: 600;
+            border-bottom: 1px dashed transparent;
+            transition: border-color 0.2s ease, color 0.2s ease;
+        }
+
+        .footer-link:hover {
+            border-bottom-color: var(--accent-blue);
+        }
+    </style>
+</head>
+<body>
+
+    <div class="marquee-wrapper" id="global-marquee" style="opacity: 1; transition: opacity 1s ease;">
+        <div class="marquee-content" id="marquee-track">
+            <span class="metric-cell red">
+                <span class="metric-muted">heart rate:</span> <span class="heartrate-val">74</span> bpm
+            </span>
+            <span class="metric-cell yellow">
+                <span class="metric-muted">listening to:</span> Harry's House
+            </span>
+            <span class="metric-cell blue">
+                <span class="metric-muted">average WPM:</span> 72
+            </span>
+            <span class="metric-cell coffee">
+                <span class="metric-muted">days since last coffee:</span> <span class="coffee-val">0</span>
+            </span>
+            <span class="metric-cell fedora">
+                <span class="metric-muted">operating system:</span> Linux Fedora Workstation 44
+            </span>
+            <span class="metric-cell purple">
+                <span class="metric-muted">currently playing:</span> GTA: Liberty City Stories
+            </span>
+        </div>
+    </div>
+
+    <div class="container">
+        <header>
+            <img src="Shivram pfp.jpg" alt="Shivram Vignesh" class="profile-img" id="avatar-img">
+
+            <h1 id="brand-name">Shivram Vignesh</h1>
+            
+            <div class="fade-in-content">
+                <div class="meta-row">
+                    <div class="meta-text">
+                        <span id="dynamic-age">17</span> &bull; Ipoh, Malaysia
+                    </div>
+                    <div class="contact-inline-grid">
+                        <a href="mailto:vigneshivram1803@gmail.com" class="pill-card">
+                            Email
+                        </a>
+                        <a href="https://medium.com/@shivramvignesh" target="_blank" class="pill-card">
+                            Medium
+                        </a>
+                    </div>
+                </div>
+                
+                <p class="tagline">
+                    I self-published a novel at age 9. It sold exactly 0 copies.
+                </p>
+            </div>
+        </header>
+
+        <main class="fade-in-content">
+            <h2 class="section-title">Writing Projects</h2>
+            <div class="projects-grid">
+
+                <div class="project-column">
+                    <div class="card">
+                        <div class="card-top">
+                            <span class="card-year">2026</span>
+                            <h3 class="card-title">It's just not my day.</h3>
+                            <p class="card-description">My fifth ever full-length novel attempt. Wish me luck.</p>
+                        </div>
+                        <div class="card-bottom">
+                            <span class="card-progress">Drafting</span>
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <div class="card-top">
+                            <span class="card-year">2018</span>
+                            <h3 class="card-title">Life In A Car</h3>
+                            <p class="card-description">This was my first book. The protagonist goes on a cross-continental adventure in their race car.</p>
+                        </div>
+                        <div class="card-bottom">
+                            <span class="card-progress planning">Published</span>
+                            <a href="https://a.co/d/095JbhML" target="_blank" class="card-action-pill">
+                                View on Amazon
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="project-column">
+                    <div class="card">
+                        <div class="card-top">
+                            <span class="card-year">2025</span>
+                            <h3 class="card-title">A Thread of Air</h3>
+                            <p class="card-description">A collection of short stories about people, connections and cozy atmospheres.</p>
+                        </div>
+                        <div class="card-bottom">
+                            <span class="card-progress completed">Completed</span>
+                            <a href="https://app.notion.com/p/A-Strange-Tune-3765b7b8715580e1a6d7e5af3db9af69?source=copy_link" target="_blank" class="card-action-pill">
+                                Read a story off the collection &rarr;
+                            </a>
+                        </div>
+                    </div>
+
+                    <a href="https://app.notion.com/p/Perfectly-Safe-3765b7b87155808cadb7dba7ad1cbc66?source=copy_link" target="_blank" class="small-rect-card">
+                        <span class="small-rect-text">Wanna read an incomplete draft of mine?</span>
+                        <span class="small-rect-arrow">&rarr;</span>
+                    </a>
+                </div>
+
+            </div>
+        </main>
+    </div>
+
+    <footer class="fade-in-content">
+        <p class="footer-text">so how do u peel a <a href="https://en.wikipedia.org/wiki/Banana" target="_blank" class="footer-link">banana</a>? oh and yeah you've reached the bottom, good job.</p>
+    </footer>
+
+    <script>
+        function updateHeartRate() {
+            const nodes = document.querySelectorAll('.heartrate-val');
+            const randomBPM = Math.floor(Math.random() * (120 - 60 + 1)) + 60;
+            
+            nodes.forEach(node => {
+                node.textContent = randomBPM;
+            });
+        }
+
+        function calculateMetrics() {
+            const today = new Date();
+            
+            const birthDate = new Date(2009, 2, 18);
+            let age = today.getFullYear() - birthDate.getFullYear();
+            const monthDiff = today.getMonth() - birthDate.getMonth();
+            if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < birthDate.getDate())) {
+                age--;
+            }
+            document.getElementById('dynamic-age').textContent = age;
+
+            const currentDayNumber = today.getDate();
+            const coffeeVal = (currentDayNumber % 2 !== 0) ? 1 : 0;
+            
+            const coffeeNodes = document.querySelectorAll('.coffee-val');
+            coffeeNodes.forEach(node => {
+                node.textContent = coffeeVal;
+            });
+        }
+
+        window.addEventListener('DOMContentLoaded', () => {
+            calculateMetrics();
+            updateHeartRate();
+            setInterval(updateHeartRate, 60000);
+
+            const track = document.getElementById('marquee-track');
+            const clone = track.innerHTML;
+            track.innerHTML += clone;
+
+            setTimeout(() => {
+                document.querySelector('.marquee-wrapper').style.opacity = '1';
+            }, 100);
+
+            const nameEl = document.getElementById('brand-name');
+            const avatarEl = document.getElementById('avatar-img');
+            const fadeElements = document.querySelectorAll('.fade-in-content');
+            
+            const nativeRect = nameEl.getBoundingClientRect();
+            const nativeX = nativeRect.left + window.scrollX;
+            const nativeY = nativeRect.top + window.scrollY;
+            
+            const centerX = window.innerWidth / 2;
+            const centerY = window.innerHeight * 0.45; 
+            
+            const initialTranslateX = centerX - nativeX - (nativeRect.width / 2);
+            const initialTranslateY = centerY - nativeY - (nativeRect.height / 2);
+            
+            nameEl.style.transform = `translate3d(${initialTranslateX}px, ${initialTranslateY}px, 0) scale(1.15)`;
+            nameEl.style.opacity = '1';
+            
+            requestAnimationFrame(() => {
+                setTimeout(() => {
+                    nameEl.classList.add('animate-up');
+                    nameEl.style.transform = 'translate3d(0, 0, 0) scale(1)';
+                }, 300); 
+            });
+
+            setTimeout(() => {
+                avatarEl.classList.add('visible');
+                fadeElements.forEach(el => el.classList.add('visible'));
+            }, 1000);
+        });
+    </script>
+
+</body>
+</html>
