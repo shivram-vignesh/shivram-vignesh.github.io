@@ -62,7 +62,148 @@
             --track-red: #ff453a;
             --track-red-bg: rgba(255, 69, 58, 0.06);
         }
+/* --- High-Performance Fluid Growing Scrollbar System --- */
 
+/* 1. Establish a fixed total boundary for the scrollbar gutter */
+::-webkit-scrollbar {
+    width: 14px;  
+    height: 14px; 
+}
+
+::-webkit-scrollbar-track {
+    background: transparent; 
+}
+ 
+/* 2. The Base Thumb: Designed extremely thin at rest (4px visible width) */
+::-webkit-scrollbar-thumb {
+    /* The thumb body starts completely invisible to let the shadow create the shape */
+    background: rgba(0, 0, 0, 0); 
+    border-radius: 20px;
+    
+    /* Keep a wide transparent border structure so the element remains positioned properly */
+    border: 5px solid transparent;  
+    background-clip: padding-box;
+    
+    /* This inset box-shadow creates a super tight, clean 4px line at rest */
+    box-shadow: inset 0 0 0 10px rgba(0, 0, 0, 0.12);
+    
+    /* Hardware-accelerated fluid transitions */
+    transition: box-shadow 0.35s cubic-bezier(0.16, 1, 0.3, 1),
+                background-color 0.35s cubic-bezier(0.16, 1, 0.3, 1),
+                border 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* 3. Hover State: Smoothly expands outward by drawing less border and deepening shadow */
+::-webkit-scrollbar-thumb:hover {
+    box-shadow: inset 0 0 0 10px rgba(0, 0, 0, 0.35);
+    border: 3px solid transparent; /* Expands smoothly from 4px to 8px thickness */
+    background-clip: padding-box;
+}
+
+/* 4. Clicked/Dragged State: Reaches maximum thickness and flows into Accent Blue */
+::-webkit-scrollbar-thumb:active {
+    background-color: var(--accent-blue); /* Solid color injection for active state tracking */
+    box-shadow: inset 0 0 0 10px var(--accent-blue);
+    border: 2px solid transparent; /* Expands to its maximum 10px thickness */
+    background-clip: padding-box;
+}
+
+/* --- Dark Mode Hardware-Accelerated Adaptations --- */
+@media (prefers-color-scheme: dark) {
+    ::-webkit-scrollbar-thumb {
+        background-color: rgba(255, 255, 255, 0);
+        box-shadow: inset 0 0 0 10px rgba(255, 255, 255, 0.16);
+        border: 5px solid transparent;
+        background-clip: padding-box;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+        box-shadow: inset 0 0 0 10px rgba(255, 255, 255, 0.45);
+        border: 3px solid transparent;
+        background-clip: padding-box;
+    }
+    ::-webkit-scrollbar-thumb:active {
+        background-color: var(--accent-blue);
+        box-shadow: inset 0 0 0 10px var(--accent-blue);
+        border: 2px solid transparent;
+        background-clip: padding-box;
+    }
+}
+/* Wide Status Card Feature Styling */
+.wide-status-card {
+    background: var(--gradient-1);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid var(--card-border);
+    padding: 24px 32px;
+    border-radius: 28px;
+    box-shadow: var(--card-shadow);
+    width: 100%;
+    margin-top: 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), 
+                box-shadow 0.4s cubic-bezier(0.16, 1, 0.3, 1),
+                border-color 0.4s ease;
+}
+
+.wide-status-card:hover {
+    transform: translate3d(0, -4px, 0) scale(1.01);
+    box-shadow: var(--card-shadow-hover);
+    border-color: var(--accent-blue);
+}
+
+.status-header {
+    font-size: 14px;
+    color: var(--text-secondary);
+    font-weight: 600;
+    letter-spacing: -0.01em;
+    /* Removed text-transform: uppercase to completely allow standard capitalization */
+}
+
+.status-body {
+    font-size: 20px;
+    font-weight: 600; /* Forces the entire baseline line to be consistently bold */
+    color: var(--text-primary);
+    letter-spacing: -0.015em;
+    line-height: 1.35;
+}
+
+/* Made uniform so text styles match perfectly regardless of span wrapping tags */
+.status-body strong {
+    font-weight: 600;
+}
+
+.editable-status {
+    color: var(--text-primary);
+    font-weight: 600; /* Unified matching layout weights */
+}
+
+/* Clean spacing adjustment for mobile viewports */
+@media (max-width: 650px) {
+    .wide-status-card {
+        padding: 20px 24px;
+    }
+    .status-body {
+        font-size: 18px;
+    }
+}
+
+/* Accent highlight for the part you will edit frequently */
+.editable-status {
+    color: var(--text-primary);
+    font-weight: 600;
+}
+
+/* Clean spacing adjustment for mobile viewports */
+@media (max-width: 650px) {
+    .wide-status-card {
+        padding: 20px 24px;
+    }
+    .status-body {
+        font-size: 18px;
+    }
+}
         @media (prefers-color-scheme: dark) {
             :root {
             /* Genre Tracks (Dark Mode) */
@@ -832,6 +973,12 @@ a, button, .card-action-pill, .pill-card, [style*="cursor: help"] {
     Anyway, I have <span id="rotating-fact" style="color: var(--accent-blue); font-weight: 600; transition: opacity 0.2s ease;">...</span>
 </p>
             </div>
+<div class="wide-status-card fade-in-content">
+    <div class="status-header">And right now?</div>
+    <div class="status-body">
+        <strong>I'm actually</strong> <span class="editable-status">doing an internship at <a href="https://ipoh.knewton.edu.my/" target="_blank" style="color: var(--accent-blue); text-decoration: none; border-bottom: 2px dashed var(--accent-blue); padding-bottom: 1px;">Knewton Global Schools Ipoh</a></span>
+    </div>
+</div>
         </header>
 
         <main class="fade-in-content">
