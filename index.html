@@ -52,10 +52,28 @@
             --metric-reddit-light: rgba(255, 69, 0, 0.08);
             --metric-duolingo: #58cc02; /* Duolingo Green */
             --metric-duolingo-light: rgba(88, 204, 2, 0.08);
+            /* Genre Tracks (Light Mode) */
+            --track-blue: #0071e3;
+            --track-blue-bg: rgba(0, 113, 227, 0.06);
+            --track-green: #34c759;
+            --track-green-bg: rgba(52, 199, 89, 0.06);
+            --track-orange: #ff9500;
+            --track-orange-bg: rgba(255, 149, 0, 0.06);
+            --track-red: #ff453a;
+            --track-red-bg: rgba(255, 69, 58, 0.06);
         }
 
         @media (prefers-color-scheme: dark) {
             :root {
+            /* Genre Tracks (Dark Mode) */
+                --track-blue: #63adef;
+                --track-blue-bg: rgba(99, 173, 239, 0.12);
+                --track-green: #30d158;
+                --track-green-bg: rgba(48, 209, 88, 0.12);
+                --track-orange: #ffb340;
+                --track-orange-bg: rgba(255, 179, 64, 0.12);
+                --track-red: #ff6961;
+                --track-red-bg: rgba(255, 105, 97, 0.12);
                 --bg-gradient: radial-gradient(at 0% 0%, rgba(28, 28, 30, 0.6) 0px, transparent 50%),
                                radial-gradient(at 100% 0%, rgba(10, 10, 12, 0.9) 0px, transparent 50%),
                                radial-gradient(at 100% 100%, rgba(20, 20, 25, 0.8) 0px, transparent 50%),
@@ -83,6 +101,9 @@
                 --metric-fedora-light: rgba(123, 162, 219, 0.12);
                 --metric-purple: #bb8fce;
                 --metric-purple-light: rgba(187, 143, 206, 0.12);
+            /* Add this right here inside the dark media query: */
+            .adaptive-icon {
+                filter: invert(1) brightness(2);
             }
         }
 
@@ -268,7 +289,105 @@
             gap: 8px;
             flex-wrap: wrap;
         }
+.genre-tag {
+            font-size: 11px;
+            font-weight: 600;
+            letter-spacing: 0.02em;
+            padding: 3px 9px;
+            border-radius: 12px;
+            display: inline-flex;
+            align-items: center;
+            width: fit-content;
+        }
+/* Clean Minimal Footer with Centered Text & Hover-Expanding Pill */
+.footer-container {
+    position: relative;
+    display: flex;
+    justify-content: center; /* Centers the statement block */
+    align-items: center;
+    width: 100%;
+    min-height: 48px;
+}
 
+.footer-text {
+    font-size: 14px;
+    color: var(--text-secondary);
+    font-weight: 500;
+    letter-spacing: -0.01em;
+    text-align: center;
+}
+
+/* Custom CSS Hover-Expanding Counter Pill */
+.visitor-pill {
+    position: absolute;
+    right: 0; /* Align perfectly to the right end */
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--accent-blue);
+    background-color: var(--accent-blue-light);
+    height: 28px;
+    width: 45px; /* Tiny starting base size for the number */
+    border-radius: 14px;
+    letter-spacing: 0.02em;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    transition: background-color 0.25s ease, color 0.25s ease, width 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+    overflow: hidden;
+    white-space: nowrap;
+}
+
+.visitor-pill:hover {
+    background-color: var(--accent-blue);
+    color: #ffffff;
+    width: 320px; /* Expands dynamically to contain the full sentence on hover */
+}
+
+/* Hide the numbers smoothly on hover */
+.visitor-pill .default-counter-text {
+    opacity: 1;
+    transition: opacity 0.2s ease;
+}
+
+.visitor-pill:hover .default-counter-text {
+    opacity: 0;
+}
+
+/* Hidden secret sentence configuration */
+.visitor-pill .hover-counter-text {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    opacity: 0;
+    font-style: italic;
+    font-weight: 600;
+    pointer-events: none;
+    transition: opacity 0.2s ease;
+}
+
+/* Smoothly reveal text once layout container expansion executes */
+.visitor-pill:hover .hover-counter-text {
+    opacity: 1;
+    transition-delay: 0.05s;
+}
+
+@media (max-width: 650px) {
+    .footer-container {
+        flex-direction: column;
+        gap: 12px;
+    }
+    .visitor-pill {
+        position: static; /* Stack safely beneath main lines on mobile viewports */
+    }
+}
+        /* Blue Track Genres */
+        .genre-tag.scifi, .genre-tag.low-fantasy, .genre-tag.sword-sorcery { color: var(--track-blue); background: var(--track-blue-bg); }
+        /* Green Track Genres */
+        .genre-tag.literary, .genre-tag.family { color: var(--track-green); background: var(--track-green-bg); }
+        /* Orange/Red Track Genres */
+        .genre-tag.adventure, .genre-tag.medieval, .genre-tag.action { color: var(--track-orange); background: var(--track-orange-bg); }
+        .genre-tag.secret { color: var(--track-red); background: var(--track-red-bg); }
         .pill-card {
             background: var(--btn-bg);
             border: 1px solid transparent;
@@ -716,28 +835,34 @@ a, button, .card-action-pill, .pill-card, [style*="cursor: help"] {
         </header>
 
         <main class="fade-in-content">
-            <h2 class="section-title">Writing Projects</h2>
+          <h2 class="section-title">Writing Projects</h2>
             <div class="projects-grid">
 
                 <div class="project-column">
                     <div class="card">
-    <div class="card-top">
-        <span class="card-year">2026</span>
-        <h3 class="card-title">It's just not my day.</h3>
-        <p class="card-description">My fifth ever full-length novel attempt. Wish me luck.</p>
-    </div>
-    <div class="card-bottom">
-        <span class="card-progress">Drafting</span>
-        <a href="#" class="card-action-pill hover-reveal" onclick="return false;">
-            <span class="default-text">Read the latest line I've written &rarr;</span>
-            <span class="hover-text">"The hell?"</span>
-        </a>
-    </div>
-</div>
+                        <div class="card-top">
+                            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+                                <span class="card-year">2026</span>
+                                <span class="genre-tag secret">it's a secret</span>
+                            </div>
+                            <h3 class="card-title">It's just not my day.</h3>
+                            <p class="card-description">My fifth ever full-length novel attempt. Wish me luck.</p>
+                        </div>
+                        <div class="card-bottom">
+                            <span class="card-progress">Drafting</span>
+                            <a href="#" class="card-action-pill hover-reveal" onclick="return false;">
+                                <span class="default-text">Read the latest line I've written &rarr;</span>
+                                <span class="hover-text">"The hell?"</span>
+                            </a>
+                        </div>
+                    </div>
 
                     <div class="card">
                         <div class="card-top">
-                            <span class="card-year">2018</span>
+                            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+                                <span class="card-year">2018</span>
+                                <span class="genre-tag adventure">adventure</span>
+                            </div>
                             <h3 class="card-title">Life In A Car</h3>
                             <p class="card-description">This was my first book. The protagonist goes on a cross-continental adventure in their race car.</p>
                         </div>
@@ -751,9 +876,9 @@ a, button, .card-action-pill, .pill-card, [style*="cursor: help"] {
 
                     <a href="https://app.notion.com/p/Future-s-Eyes-3765b7b8715580fe9cfdc5447b20a94e?source=copy_link" target="_blank" class="small-rect-card story-card">
                         <div class="story-meta">
-                            <div class="story-header">
+                            <div class="story-header" style="justify-content: space-between; width: 100%;">
                                 <span class="story-year">2024</span>
-                                
+                                <span class="genre-tag scifi">supposed to be sci-fi</span>
                             </div>
                             <span class="story-text">Future's Eyes</span>
                             <span class="story-desc">A man who has made a horrible mistake.</span>
@@ -763,9 +888,9 @@ a, button, .card-action-pill, .pill-card, [style*="cursor: help"] {
 
                     <a href="https://app.notion.com/p/Designer-s-World-3765b7b8715580a489e9e443b06d78ba?source=copy_link" target="_blank" class="small-rect-card story-card">
                         <div class="story-meta">
-                            <div class="story-header">
+                            <div class="story-header" style="justify-content: space-between; width: 100%;">
                                 <span class="story-year">2021</span>
-                                
+                                <span class="genre-tag scifi">sci-fi</span>
                             </div>
                             <span class="story-text">Designer's World</span>
                             <span class="story-desc">A real smart student creates his own computer world.</span>
@@ -775,9 +900,9 @@ a, button, .card-action-pill, .pill-card, [style*="cursor: help"] {
 
                     <a href="https://app.notion.com/p/SPY-1-A-Dark-Figure-3765b7b8715580d5b940db29b13e93c7?source=copy_link" target="_blank" class="small-rect-card story-card">
                         <div class="story-meta">
-                            <div class="story-header">
+                            <div class="story-header" style="justify-content: space-between; width: 100%;">
                                 <span class="story-year">2018</span>
-                                
+                                <span class="genre-tag action">action</span>
                             </div>
                             <span class="story-text">SPY - The Dark Figure</span>
                             <span class="story-desc">This is a spy thriller that totally takes no inspo from Harry Potter.</span>
@@ -787,23 +912,24 @@ a, button, .card-action-pill, .pill-card, [style*="cursor: help"] {
 
                     <a href="https://app.notion.com/p/SPY-2-Cloak-Dagger-3765b7b8715580578ee8fee027627762?source=copy_link" target="_blank" class="small-rect-card story-card">
                         <div class="story-meta">
-                            <div class="story-header">
+                            <div class="story-header" style="justify-content: space-between; width: 100%;">
                                 <span class="story-year">2019</span>
-                                
+                                <span class="genre-tag action">action</span>
                             </div>
                             <span class="story-text">SPY - Cloak & Dagger</span>
                             <span class="story-desc">The action is dialled up to an 11 on this one.</span>
                         </div>
                         <span class="small-rect-arrow">&rarr;</span>
                     </a>
-
-                   
                 </div>
 
                 <div class="project-column">
                     <div class="card">
                         <div class="card-top">
-                            <span class="card-year">2025</span>
+                            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+                                <span class="card-year">2025</span>
+                                <span class="genre-tag literary">literary</span>
+                            </div>
                             <h3 class="card-title">A Thread of Air</h3>
                             <p class="card-description">A collection of short stories about people, connections and cozy atmospheres.</p>
                         </div>
@@ -822,9 +948,9 @@ a, button, .card-action-pill, .pill-card, [style*="cursor: help"] {
 
                     <a href="https://app.notion.com/p/Azizam-3765b7b871558069842ff680eaf3d7ac?source=copy_link" target="_blank" class="small-rect-card story-card">
                         <div class="story-meta">
-                            <div class="story-header">
+                            <div class="story-header" style="justify-content: space-between; width: 100%;">
                                 <span class="story-year">2025</span>
-                                
+                                <span class="genre-tag literary">literary</span>
                             </div>
                             <span class="story-text">Azizam</span>
                             <span class="story-desc">Meeting a familiar face in a cold London night.</span>
@@ -834,9 +960,9 @@ a, button, .card-action-pill, .pill-card, [style*="cursor: help"] {
 
                     <a href="https://app.notion.com/p/Skybound-Part-One-3765b7b8715580f5933fd47f5ca0c715?source=copy_link" target="_blank" class="small-rect-card story-card">
                         <div class="story-meta">
-                            <div class="story-header">
+                            <div class="story-header" style="justify-content: space-between; width: 100%;">
                                 <span class="story-year">2024</span>
-                                
+                                <span class="genre-tag low-fantasy">low fantasy</span>
                             </div>
                             <span class="story-text">Skybound - Part One</span>
                             <span class="story-desc">It's set in a floating archipelago. Yeah go read it.</span>
@@ -846,9 +972,9 @@ a, button, .card-action-pill, .pill-card, [style*="cursor: help"] {
 
                     <a href="https://app.notion.com/p/Skybound-Part-Two-3765b7b87155804d8a64e88c05bc86f5?source=copy_link" target="_blank" class="small-rect-card story-card">
                         <div class="story-meta">
-                            <div class="story-header">
+                            <div class="story-header" style="justify-content: space-between; width: 100%;">
                                 <span class="story-year">2024</span>
-                                
+                                <span class="genre-tag low-fantasy">low fantasy</span>
                             </div>
                             <span class="story-text">Skybound - Part Two</span>
                             <span class="story-desc">This one is darker than the first one.</span>
@@ -858,9 +984,9 @@ a, button, .card-action-pill, .pill-card, [style*="cursor: help"] {
 
                     <a href="https://app.notion.com/p/The-Imperial-Family-3765b7b8715580bfa0b5c789d8ee4a7d?source=copy_link" target="_blank" class="small-rect-card story-card">
                         <div class="story-meta">
-                            <div class="story-header">
+                            <div class="story-header" style="justify-content: space-between; width: 100%;">
                                 <span class="story-year">2022</span>
-                                
+                                <span class="genre-tag medieval">medieval</span>
                             </div>
                             <span class="story-text">The Imperial Family</span>
                             <span class="story-desc">This one started because my English teacher wanted something mature and I just went...slavery.</span>
@@ -870,9 +996,9 @@ a, button, .card-action-pill, .pill-card, [style*="cursor: help"] {
 
                     <a href="https://app.notion.com/p/The-Enchantress-Palace-3765b7b8715580c286e0e89a2212d933?source=copy_link" target="_blank" class="small-rect-card story-card">
                         <div class="story-meta">
-                            <div class="story-header">
+                            <div class="story-header" style="justify-content: space-between; width: 100%;">
                                 <span class="story-year">2021</span>
-                                
+                                <span class="genre-tag sword-sorcery">sword&sorcery</span>
                             </div>
                             <span class="story-text">The Enchantress' Palace</span>
                             <span class="story-desc">A Sword & Sorcery novel attempt with more ambition than ever.</span>
@@ -882,40 +1008,78 @@ a, button, .card-action-pill, .pill-card, [style*="cursor: help"] {
 
                     <a href="https://app.notion.com/p/Specs-3765b7b871558036a800f5e8468256b2?source=copy_link" target="_blank" class="small-rect-card story-card">
                         <div class="story-meta">
-                            <div class="story-header">
+                            <div class="story-header" style="justify-content: space-between; width: 100%;">
                                 <span class="story-year">2018</span>
-                                
+                                <span class="genre-tag family">family</span>
                             </div>
                             <span class="story-text">Specs</span>
                             <span class="story-desc">The most utterly stupid dog story ever.</span>
                         </div>
                         <span class="small-rect-arrow">&rarr;</span>
                     </a>
-
-                    
                 </div>
 
             </div>
 
-            <h2 class="section-title">My Daily Drivers</h2>
-            <div class="drivers-flex-wrap">
-                <div class="driver-token">💻 Dell Inspiron 15</div>
-                <div class="driver-token">🪟 Windows 11</div>
-                <div class="driver-token">🐧 Linux Fedora Workstation 44</div>
-                <div class="driver-token">📱 iPhone 13 Mini</div>
-                <div class="driver-token">⌚ Apple Watch Series 5</div>
-                <div class="driver-token">🎮 PlayStation 5</div>
-            </div>
+
+   <h2 class="section-title">My Daily Drivers</h2>
+<div class="drivers-flex-wrap">
+    <div class="driver-token">
+        <img src="https://cdn.simpleicons.org/dell/000000" alt="Dell" style="width: 16px; height: 16px; display: block;" class="adaptive-icon">
+        Dell Inspiron 15
+    </div>
+
+    <div class="driver-token">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/8/87/Windows_logo_-_2021.svg" alt="Windows 11" style="width: 16px; height: 16px; display: block;">
+        Windows 11
+    </div>
+
+    <div class="driver-token">
+        <img src="https://cdn.simpleicons.org/fedora/51A2DA" alt="Fedora" style="width: 16px; height: 16px; display: block;">
+        Linux Fedora Workstation 44
+    </div>
+
+    <div class="driver-token">
+        <img src="https://cdn.simpleicons.org/apple/000000" alt="Apple" style="width: 16px; height: 16px; display: block;" class="adaptive-icon">
+        iPhone 13 Mini
+    </div>
+
+    <div class="driver-token">
+        <img src="https://cdn.simpleicons.org/apple/000000" alt="Apple Watch" style="width: 16px; height: 16px; display: block;" class="adaptive-icon">
+        Apple Watch Series 5
+    </div>
+
+    <div class="driver-token">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/4/4e/Playstation_logo_colour.svg" alt="PlayStation" style="width: 19px; height: 15px; display: block; filter: brightness(0) invert(1);">
+        PlayStation 5
+    </div>
+    
+    <div class="driver-token">
+        <img src="https://cdn.simpleicons.org/youtubemusic/FF0000" alt="YouTube Music" style="width: 16px; height: 16px; display: block;">
+        YouTube Music
+    </div>
+
+    <div class="driver-token">
+        <img src="https://cdn.simpleicons.org/notion/000000" alt="Notion" style="width: 16px; height: 16px; display: block;" class="adaptive-icon">
+        Notion
+    </div>
+</div>
         </main>
     </div>
 
- <footer class="fade-in-content">
+<footer class="fade-in-content">
+    <div class="footer-container">
         <p class="footer-text">
             <span id="footer-random-quote">so how do u peel a <a href="https://en.wikipedia.org/wiki/Banana" target="_blank" class="footer-link">banana</a>?</span>
             <br style="margin-top: 6px; display: block;">
             oh and yeah you've reached the bottom, good job.
         </p>
-    </footer>
+        <div class="visitor-pill">
+            <span class="default-counter-text" id="visit-count">...</span>
+            <span class="hover-counter-text">yes this is the visitor count since I added this feature</span>
+        </div>
+    </div>
+</footer>
 
     <script>
         function updateHeartRate() {
@@ -962,6 +1126,29 @@ a, button, .card-action-pill, .pill-card, [style*="cursor: help"] {
 
         window.addEventListener('DOMContentLoaded', () => {
             calculateMetrics();
+            // Visitor Counter Logic using countapi.xyz
+// Local Visitor Counter Logic
+// Minimal Live Global Visitor Counter
+function getVisitorCount() {
+    // Uses a reliable, open-source hit counter API
+    const name = "shivramvignesh_portfolio"; 
+    
+    fetch(`https://api.moe-counter.biz/hit/${name}/sign`)
+        .then(res => res.json())
+        .then(data => {
+            // Safely formats numbers (e.g., 1,234)
+            document.getElementById('visit-count').textContent = data.value.toLocaleString();
+        })
+        .catch(err => {
+            console.error("Counter error:", err);
+            // Graceful invisible fallback if the API is slow to respond
+            document.getElementById('visit-count').textContent = "1";
+        });
+}
+
+
+// Fire the counter function
+getVisitorCount();
             updateHeartRate();
             setInterval(updateHeartRate, 60000);
 // Check if the user is viewing between 10 PM and 6 AM in your time zone (GMT+8)
