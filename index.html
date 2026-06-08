@@ -1273,23 +1273,29 @@ a, button, .card-action-pill, .pill-card, [style*="cursor: help"] {
 
         window.addEventListener('DOMContentLoaded', () => {
             calculateMetrics();
-            // Visitor Counter Logic using countapi.xyz
-// Local Visitor Counter Logic
-// Minimal Live Global Visitor Counter
+// Minimal Live Global Visitor Counter (Fixed with CountAPI)
 function getVisitorCount() {
-    // Uses a reliable, open-source hit counter API
-    const name = "shivramvignesh_portfolio"; 
+    // Unique namespace and key for your site
+    const namespace = "shivramvignesh_portfolio_2026";
+    const key = "visits";
     
-    fetch(`https://api.moe-counter.biz/hit/${name}/sign`)
-        .then(res => res.json())
+    fetch(`https://api.countapi.xyz/hit/${namespace}/${key}`)
+        .then(res => {
+            if (!res.ok) throw new Error("API response error");
+            return res.json();
+        })
         .then(data => {
             // Safely formats numbers (e.g., 1,234)
-            document.getElementById('visit-count').textContent = data.value.toLocaleString();
+            if (data && data.value) {
+                document.getElementById('visit-count').textContent = data.value.toLocaleString();
+            } else {
+                document.getElementById('visit-count').textContent = "---";
+            }
         })
         .catch(err => {
             console.error("Counter error:", err);
-            // Graceful invisible fallback if the API is slow to respond
-            document.getElementById('visit-count').textContent = "1";
+            // Graceful fallback display if the API is offline
+            document.getElementById('visit-count').textContent = "Welcome";
         });
 }
 
