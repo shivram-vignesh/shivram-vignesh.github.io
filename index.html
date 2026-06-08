@@ -458,70 +458,7 @@
     text-align: center;
 }
 
-/* Custom CSS Hover-Expanding Counter Pill */
-.visitor-pill {
-    position: absolute;
-    right: 0; /* Align perfectly to the right end */
-    font-size: 11px;
-    font-weight: 700;
-    color: var(--accent-blue);
-    background-color: var(--accent-blue-light);
-    height: 28px;
-    width: 45px; /* Tiny starting base size for the number */
-    border-radius: 14px;
-    letter-spacing: 0.02em;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    transition: background-color 0.25s ease, color 0.25s ease, width 0.25s cubic-bezier(0.16, 1, 0.3, 1);
-    overflow: hidden;
-    white-space: nowrap;
-}
 
-.visitor-pill:hover {
-    background-color: var(--accent-blue);
-    color: #ffffff;
-    width: 320px; /* Expands dynamically to contain the full sentence on hover */
-}
-
-/* Hide the numbers smoothly on hover */
-.visitor-pill .default-counter-text {
-    opacity: 1;
-    transition: opacity 0.2s ease;
-}
-
-.visitor-pill:hover .default-counter-text {
-    opacity: 0;
-}
-
-/* Hidden secret sentence configuration */
-.visitor-pill .hover-counter-text {
-    position: absolute;
-    left: 50%;
-    top: 50%;
-    transform: translate(-50%, -50%);
-    opacity: 0;
-    font-style: italic;
-    font-weight: 600;
-    pointer-events: none;
-    transition: opacity 0.2s ease;
-}
-
-/* Smoothly reveal text once layout container expansion executes */
-.visitor-pill:hover .hover-counter-text {
-    opacity: 1;
-    transition-delay: 0.05s;
-}
-
-@media (max-width: 650px) {
-    .footer-container {
-        flex-direction: column;
-        gap: 12px;
-    }
-    .visitor-pill {
-        position: static; /* Stack safely beneath main lines on mobile viewports */
-    }
-}
         /* Blue Track Genres */
         .genre-tag.scifi, .genre-tag.low-fantasy, .genre-tag.sword-sorcery { color: var(--track-blue); background: var(--track-blue-bg); }
         /* Green Track Genres */
@@ -1221,10 +1158,7 @@ a, button, .card-action-pill, .pill-card, [style*="cursor: help"] {
             <br style="margin-top: 6px; display: block;">
             oh and yeah you've reached the bottom, good job.
         </p>
-        <div class="visitor-pill">
-            <span class="default-counter-text" id="visit-count">...</span>
-            <span class="hover-counter-text">yes this is the visitor count since I added this feature</span>
-        </div>
+      
     </div>
 </footer>
 
@@ -1273,35 +1207,10 @@ a, button, .card-action-pill, .pill-card, [style*="cursor: help"] {
 
         window.addEventListener('DOMContentLoaded', () => {
             calculateMetrics();
-// Minimal Live Global Visitor Counter (Fixed with CountAPI)
-function getVisitorCount() {
-    // Unique namespace and key for your site
-    const namespace = "shivramvignesh_portfolio_2026";
-    const key = "visits";
-    
-    fetch(`https://api.countapi.xyz/hit/${namespace}/${key}`)
-        .then(res => {
-            if (!res.ok) throw new Error("API response error");
-            return res.json();
-        })
-        .then(data => {
-            // Safely formats numbers (e.g., 1,234)
-            if (data && data.value) {
-                document.getElementById('visit-count').textContent = data.value.toLocaleString();
-            } else {
-                document.getElementById('visit-count').textContent = "---";
-            }
-        })
-        .catch(err => {
-            console.error("Counter error:", err);
-            // Graceful fallback display if the API is offline
-            document.getElementById('visit-count').textContent = "Welcome";
-        });
-}
+            // Visitor Counter Logic using countapi.xyz
+// Local Visitor Counter Logic
+// Minimal Live Global Visitor Counter
 
-
-// Fire the counter function
-getVisitorCount();
             updateHeartRate();
             setInterval(updateHeartRate, 60000);
 // Check if the user is viewing between 10 PM and 6 AM in your time zone (GMT+8)
