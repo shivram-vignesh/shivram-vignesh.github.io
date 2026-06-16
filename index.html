@@ -840,6 +840,368 @@ a, button, .card-action-pill, .pill-card, [style*="cursor: help"] {
         .footer-link:hover {
             border-bottom-color: var(--accent-blue);
         }
+        
+/* --- Floating Corner Trigger (Accent Blue Mode + Custom Reset) --- */
+.story-pitch-trigger {
+    /* Reset all browser defaults for button elements */
+    background: none;
+    color: inherit;
+    border: none;
+    padding: 0;
+    font: inherit;
+    outline: inherit;
+    
+    position: fixed;
+    bottom: 24px;
+    right: 24px;
+    height: 48px;
+    width: 48px;
+    
+    /* Vibrant Accent Blue Base State */
+    background-color: var(--accent-blue);
+    border: 1px solid var(--accent-blue);
+    border-radius: 24px;
+    
+    /* Layered glow and depth shadow definition */
+    box-shadow: 0 6px 20px rgba(91, 132, 228, 0.3), var(--card-shadow);
+    
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    overflow: hidden;
+    z-index: 999;
+    
+    /* Forces your custom cursor image explicitly on both idle and hover */
+    cursor: url('arrow.png'), pointer !important;
+    
+    transition: width 0.4s cubic-bezier(0.16, 1, 0.3, 1), 
+                transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), 
+                box-shadow 0.4s cubic-bezier(0.16, 1, 0.3, 1),
+                background-color 0.3s ease,
+                border-color 0.3s ease;
+}
+
+/* Ensure child layers pass clicks directly down to the parent trigger */
+/* --- Floating Corner Trigger (Accent Blue Mode + Custom Reset) --- */
+.story-pitch-trigger {
+    /* Reset all browser defaults for button elements */
+    background: none;
+    color: inherit;
+    border: none;
+    padding: 0;
+    font: inherit;
+    outline: inherit;
+    
+    position: fixed;
+    bottom: 24px;
+    right: 24px;
+    height: 48px;
+    width: 48px; /* Idle circular state width */
+    
+    /* Vibrant Accent Blue Base State */
+    background-color: var(--accent-blue);
+    border: 1px solid var(--accent-blue);
+    border-radius: 24px;
+    
+    /* Layered glow and depth shadow definition */
+    box-shadow: 0 6px 20px rgba(91, 132, 228, 0.3), var(--card-shadow);
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    overflow: hidden;
+    z-index: 999;
+    
+    /* Forces your custom cursor image explicitly on both idle and hover */
+    cursor: url('arrow.png'), pointer !important;
+    transition: width 0.4s cubic-bezier(0.16, 1, 0.3, 1), 
+                transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), 
+                box-shadow 0.4s cubic-bezier(0.16, 1, 0.3, 1), 
+                background-color 0.3s ease, 
+                border-color 0.3s ease;
+}
+
+/* Ensure child layers pass clicks directly down to the parent trigger */
+.story-pitch-trigger * {
+    pointer-events: none;
+}
+
+/* Base style for the icon box holding the microphone */
+.trigger-icon {
+    position: relative;
+    font-size: 16px;
+    font-weight: 700;
+    width: 46px; /* Strict structural block bounds so the text never jumps */
+    height: 46px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    transition: color 0.2s ease;
+}
+
+/* Hides the microphone text naturally on hover by turning it transparent */
+.story-pitch-trigger:hover .trigger-icon {
+    color: transparent;
+}
+
+/* Injects the perfectly centered right arrow right in place of the microphone */
+.story-pitch-trigger:hover .trigger-icon::before {
+    content: "\2192"; /* Unicode code for right arrow symbol (→) */
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%); /* Mathematical dead-center alignment */
+    color: var(--accent-blue);
+    font-weight: 700;
+    font-size: 18px;
+}
+
+/* --- Expansion Magic on Hover --- */
+.story-pitch-trigger:hover {
+    width: 230px; /* Stays expanding smoothly to original layout length */
+    transform: translate3d(0, -4px, 0);
+    box-shadow: var(--card-shadow-hover);
+    
+    /* Morphs into your beautiful glassmorphism theme styling when expanded */
+    background: var(--gradient-1);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border-color: var(--accent-blue);
+    cursor: url('arrow.png'), pointer !important;
+}
+
+/* Base style for textual element */
+.trigger-text {
+    font-size: 14px;
+    font-weight: 600;
+    color: #ffffff;
+    white-space: nowrap;
+    opacity: 0; /* Hidden while button is a circle */
+    transform: translate3d(-10px, 0, 0);
+    transition: color 0.2s ease, opacity 0.3s ease, transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Reveals text smoothly along with the expand width step animation */
+.story-pitch-trigger:hover .trigger-text {
+    color: var(--text-primary);
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+}
+/* --- Modal Layout Overlays --- */
+.story-modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.15);
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.4s ease, visibility 0.4s ease;
+    padding: 24px;
+}
+
+.story-modal-overlay.active {
+    opacity: 1;
+    visibility: visible;
+}
+
+.story-modal-card {
+    background: var(--gradient-1);
+    backdrop-filter: blur(30px);
+    -webkit-backdrop-filter: blur(30px);
+    border: 1px solid var(--card-border);
+    border-radius: 32px;
+    padding: 40px;
+    max-width: 480px;
+    width: 100%;
+    box-shadow: var(--card-shadow-hover);
+    position: relative;
+    transform: scale(0.9) translate3d(0, 20px, 0);
+    transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.story-modal-overlay.active .story-modal-card {
+    transform: scale(1) translate3d(0, 0, 0);
+}
+
+.modal-close-btn {
+    position: absolute;
+    top: 24px;
+    right: 24px;
+    background: var(--btn-bg);
+    border: none;
+    color: var(--text-secondary);
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    font-size: 11px;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background-color 0.2s, color 0.2s;
+    cursor: url('arrow.png'), pointer !important;
+}
+
+.modal-close-btn:hover {
+    background: var(--metric-red-light);
+    color: var(--metric-red);
+}
+
+.modal-header-icon {
+    font-size: 28px;
+    color: var(--accent-blue);
+    margin-bottom: 16px;
+    font-weight: bold;
+}
+
+.story-modal-card h2 {
+    font-size: 28px;
+    font-weight: 700;
+    letter-spacing: -0.025em;
+    color: var(--text-primary);
+    line-height: 1.2;
+    margin-bottom: 14px;
+}
+
+.modal-manifesto {
+    font-size: 16px;
+    color: var(--text-primary);
+    line-height: 1.5;
+    margin-bottom: 24px;
+    font-weight: 500;
+}
+
+.modal-subheading {
+    font-size: 15px; /* Bumped up a couple points bigger */
+    text-transform: none; /* Keeps mixed case */
+    letter-spacing: 0.05em;
+    color: var(--text-secondary); /* Retains structural gray */
+    font-weight: 600; /* Retains the bold weight */
+    margin-bottom: 12px;
+}
+/* Container list formatting */
+/* Container list formatting */
+.modal-outcomes-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    margin-bottom: 32px;
+}
+
+.modal-outcomes-list li {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+}
+
+/* Perfect crisp low-brightness solid badge container */
+.modal-icon-container {
+    width: 32px;
+    height: 32px;
+    background-color: rgba(0, 0, 0, 0.05); /* Light mode: subtle grey container */
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    transition: background-color 0.3s ease;
+}
+
+/* Solid, low-brightness dark mode background badge */
+[data-theme="dark"] .modal-icon-container {
+    background-color: #d4d4d8; /* Muted solid steel-white: high visibility but anti-glare */
+}
+
+/* Constrain the vector assets symmetrically inside the circle badge */
+.modal-icon-container svg {
+    width: 16px;
+    height: 16px;
+    display: block;
+}
+
+/* Slightly adjusts the native emoji size to scale proportionately inside the badge */
+.modal-native-emoji {
+    font-size: 16px;
+    line-height: 1;
+    user-select: none;
+}
+
+/* Item text style properties */
+.modal-text-content {
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--text-secondary);
+    line-height: 1.4;
+}
+/* Text layer separated from structural icon box for perfect legibility */
+.modal-item-text {
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--text-secondary);
+    line-height: 1.4;
+}
+
+.modal-primary-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 48px;
+    background-color: var(--text-primary);
+    color: var(--bg-gradient);
+    border-radius: 24px;
+    font-size: 15px;
+    font-weight: 600;
+    text-decoration: none;
+    letter-spacing: -0.01em;
+    
+    /* Smooth transition mappings */
+    transition: transform 0.2s ease, background-color 0.2s ease, color 0.2s ease;
+    cursor: url('arrow.png'), pointer !important;
+}
+
+@media (prefers-color-scheme: dark) {
+    .modal-primary-btn {
+        background-color: #ffffff;
+        color: #000000;
+    }
+}
+
+/* Animates seamlessly to Accent Blue on mouse interaction */
+.modal-primary-btn:hover {
+    transform: scale(1.015);
+    background-color: var(--accent-blue) !important;
+    color: #ffffff !important;
+}
+
+@media (prefers-color-scheme: dark) {
+    .modal-primary-btn {
+        background-color: #ffffff;
+        color: #000000;
+    }
+}
+
+/* Clean hover injection rule for background/text color scaling transitions */
+.modal-primary-btn:hover {
+    transform: scale(1.015);
+    background-color: var(--accent-blue) !important;
+    color: #ffffff !important;
+}
+
+@media (max-width: 500px) {
+    .story-modal-card {
+        padding: 32px 24px;
+    }
+}
     </style>
 </head>
 <body>
@@ -1161,7 +1523,52 @@ a, button, .card-action-pill, .pill-card, [style*="cursor: help"] {
       
     </div>
 </footer>
+<button class="story-pitch-trigger" id="pitchTrigger" onclick="openPitchModal()">
+    <span class="trigger-icon">🎤</span>
+    <span class="trigger-text">okay, I wanna interview you</span>
+</button>
 
+<div class="story-modal-overlay" id="pitchModal" onclick="closePitchModal(event)">
+    <div class="story-modal-card">
+        <button class="modal-close-btn" onclick="closePitchModal(event)">✕</button>
+        <div class="modal-header-icon">🎤</div>
+        <h2>It doesn't matter who you are.</h2>
+        <p class="modal-manifesto">
+            People are interesting. Tell me a bit about yourself. If I think there's a story worth exploring, I'll reach out and we'll chat.
+        </p>
+        
+       <ul class="modal-outcomes-list">
+            <li>
+                <div class="modal-icon-container">
+                    <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" style="fill: var(--text-primary);">
+                        <path d="M13.54 12a6.8 6.8 0 0 1-6.77 6.82A6.8 6.8 0 0 1 0 12a6.8 6.8 0 0 1 6.77-6.82A6.8 6.8 0 0 1 13.54 12zm7.42 0c0 3.54-1.51 6.42-3.38 6.42s-3.38-2.88-3.38-6.42 1.51-6.42 3.38-6.42 3.38 2.88 3.38 6.42zm3.04 0c0 3.24-.31 5.87-.7 5.87s-.7-2.63-.7-5.87.31-5.87.7-5.87.7 2.63.7 5.87z"/>
+                    </svg>
+                </div>
+                <span class="modal-text-content">A written interview on Medium</span>
+            </li>
+            <li>
+                <div class="modal-icon-container">
+                    <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" style="fill: #FF0000;">
+                        <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
+                    </svg>
+                </div>
+                <span class="modal-text-content">A YouTube interview</span>
+            </li>
+            <li>
+                <div class="modal-icon-container">
+                    <span class="modal-native-emoji">🤝</span>
+                </div>
+                <span class="modal-text-content">Or just a really interesting conversation and we become besties</span>
+            </li>
+        </ul>
+        
+        <div class="modal-action-wrapper">
+            <a href="https://form.jotform.com/261663265303050" target="_blank" class="modal-primary-btn">
+                alright let's do it
+            </a>
+        </div>
+    </div>
+</div>
     <script>
         function updateHeartRate() {
             const nodes = document.querySelectorAll('.heartrate-val');
@@ -1323,6 +1730,21 @@ function cycleFact() {
 cycleFact();
 setInterval(cycleFact, 3000);
         });
+        
+function openPitchModal() {
+    const modal = document.getElementById('pitchModal');
+    modal.classList.add('active');
+    document.body.style.overflow = 'hidden';
+}
+
+function closePitchModal(event) {
+    // Closes if you click the background overlay shadow, the "X" button, or the action button link
+    if (event.target.id === 'pitchModal' || event.target.classList.contains('modal-close-btn') || event.target.tagName === 'A') {
+        const modal = document.getElementById('pitchModal');
+        modal.classList.remove('active');
+        document.body.style.overflow = '';
+    }
+}
     </script>
 
 </body>
