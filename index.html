@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Shivram Vignesh - Writer, Student and someone who spends too much time in front of a laptop.">
     <meta name="keywords" content="Shivram Vignesh, Writer, Student, Life In A Car, A Thread of Air">
+<script defer src="https://cloud.umami.is/script.js" data-website-id="dfb1145f-e0a6-4e91-adf1-7d1caf1f8422"></script>
     <title>Shivram Vignesh</title>
     <link rel="icon" type="image/png" href="favicon.png">
     <style>
@@ -229,12 +230,12 @@
                 --metric-fedora-light: rgba(123, 162, 219, 0.12);
                 --metric-purple: #bb8fce;
                 --metric-purple-light: rgba(187, 143, 206, 0.12);
-            /* Add this right here inside the dark media query: */
+            /* Add this right here inside the dark media query: */}
             .adaptive-icon {
                 filter: invert(1) brightness(2);
             }
         }
-}
+
         * {
             box-sizing: border-box;
             margin: 0;
@@ -828,45 +829,6 @@ a, button, .card-action-pill, .pill-card, [style*="cursor: help"] {
             border-bottom-color: var(--accent-blue);
         }
         
-/* --- Floating Corner Trigger (Accent Blue Mode + Custom Reset) --- */
-.story-pitch-trigger {
-    /* Reset all browser defaults for button elements */
-    background: none;
-    color: inherit;
-    border: none;
-    padding: 0;
-    font: inherit;
-    outline: inherit;
-    
-    position: fixed;
-    bottom: 24px;
-    right: 24px;
-    height: 48px;
-    width: 48px;
-    
-    /* Vibrant Accent Blue Base State */
-    background-color: var(--accent-blue);
-    border: 1px solid var(--accent-blue);
-    border-radius: 24px;
-    
-    /* Layered glow and depth shadow definition */
-    box-shadow: 0 6px 20px rgba(91, 132, 228, 0.3), var(--card-shadow);
-    
-    display: flex;
-    align-items: center;
-    justify-content: flex-start;
-    overflow: hidden;
-    z-index: 999;
-    
-    /* Forces your custom cursor image explicitly on both idle and hover */
-    cursor: url('arrow.png'), pointer !important;
-    
-    transition: width 0.4s cubic-bezier(0.16, 1, 0.3, 1), 
-                transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), 
-                box-shadow 0.4s cubic-bezier(0.16, 1, 0.3, 1),
-                background-color 0.3s ease,
-                border-color 0.3s ease;
-}
 
 /* Ensure child layers pass clicks directly down to the parent trigger */
 /* --- Floating Corner Trigger (Accent Blue Mode + Custom Reset) --- */
@@ -1170,25 +1132,14 @@ a, button, .card-action-pill, .pill-card, [style*="cursor: help"] {
     color: #ffffff !important;
 }
 
-@media (prefers-color-scheme: dark) {
-    .modal-primary-btn {
-        background-color: #ffffff;
-        color: #000000;
-    }
-}
 
-/* Clean hover injection rule for background/text color scaling transitions */
-.modal-primary-btn:hover {
-    transform: scale(1.015);
-    background-color: var(--accent-blue) !important;
-    color: #ffffff !important;
-}
 
 @media (max-width: 500px) {
     .story-modal-card {
         padding: 32px 24px;
     }
 }
+
     </style>
 </head>
 <body>
@@ -1235,7 +1186,7 @@ a, button, .card-action-pill, .pill-card, [style*="cursor: help"] {
         <header>
             <img src="Shivram pfp.png" alt="Shivram Vignesh" class="profile-img" id="avatar-img">
 
-            <h1 id="brand-name">Shivram Vignesh<span id="sleep-emoji" title="the guy is prolly asleep rn" style="cursor: help; margin-left: 8px;"></span></h1>
+            <h1 id="brand-name">Shivram Vignesh<span id="sleep-emoji" role="img" aria-label="Sleeping status" title="the guy is prolly asleep rn" style="cursor: help; margin-left: 8px;"></span></h1>
             
             <div class="fade-in-content">
                 <div class="meta-row">
@@ -1556,7 +1507,7 @@ a, button, .card-action-pill, .pill-card, [style*="cursor: help"] {
         </div>
     </div>
 </div>
-    <script>
+  <script>
         function updateHeartRate() {
             const nodes = document.querySelectorAll('.heartrate-val');
             const randomBPM = Math.floor(Math.random() * (120 - 60 + 1)) + 60;
@@ -1585,7 +1536,6 @@ a, button, .card-action-pill, .pill-card, [style*="cursor: help"] {
                 node.textContent = coffeeVal;
             });
 
-            // ADD THE DUOLINGO AUTO-COUNT INCREMENTOR BELOW:
             const baseDate = new Date(2026, 5, 6); // June 6, 2026
             const baseStreak = 889;
             
@@ -1600,31 +1550,23 @@ a, button, .card-action-pill, .pill-card, [style*="cursor: help"] {
         }
 
         window.addEventListener('DOMContentLoaded', () => {
+        
             calculateMetrics();
-            // Visitor Counter Logic using countapi.xyz
-// Local Visitor Counter Logic
-// Minimal Live Global Visitor Counter
-
             updateHeartRate();
             setInterval(updateHeartRate, 60000);
-// Check if the user is viewing between 10 PM and 6 AM in your time zone (GMT+8)
+
             function checkSleepStatus() {
                 const now = new Date();
-                
-                // GMT+8 returns an offset of -480 minutes in native JavaScript (UTC - Local)
                 const isGMT8 = now.getTimezoneOffset() === -480;
                 
                 if (isGMT8) {
-                    const currentHour = now.getHours(); // Returns 0-23
-                    
-                    // 22 is 10 PM, 6 is 6 AM
+                    const currentHour = now.getHours();
                     if (currentHour >= 22 || currentHour < 6) {
                         document.getElementById('sleep-emoji').textContent = '💤';
                     }
                 }
             }
 
-            // Run the execution block immediately
             checkSleepStatus();
             const track = document.getElementById('marquee-track');
             const clone = track.innerHTML;
@@ -1662,30 +1604,30 @@ a, button, .card-action-pill, .pill-card, [style*="cursor: help"] {
                 avatarEl.classList.add('visible');
                 fadeElements.forEach(el => el.classList.add('visible'));
             }, 1000);
-        // Array of your statements (minus the "I have" part)
-const facts = [
-    "been a school prefect.",
-    "done an internship.",
-    "been an MC.",
-    "no camera fear.",
-    "minimal stage fear.",
-    "been manufactured in Tamil Nadu, India.",
-    "no plans for world domination.",
-    "at least three brain cells.",
-    "a consistent sleep schedule.",
-    "a Cambridge Outstanding Award for AS Level IT (Malaysia).",
-    "two eyes.",
-    "learned Python.",
-    "an intense fear of snakes.",
-    "learned Adobe Photoshop.",
-    "learned Adobe Illustrator.",
-    "learned Adobe Animate.",
-    "learned all the dumb Excel formulas.",
-    "the ability to swim.",
-    "ridden a bike frequently.",
-    "been in a band."
-];
-// Array of custom footer statements
+
+            const facts = [
+                "been a school prefect.",
+                "done an internship.",
+                "been an MC.",
+                "no camera fear.",
+                "minimal stage fear.",
+                "been manufactured in Tamil Nadu, India.",
+                "no plans for world domination.",
+                "at least three brain cells.",
+                "a consistent sleep schedule.",
+                "a Cambridge Outstanding Award for AS Level IT (Malaysia).",
+                "two eyes.",
+                "learned Python.",
+                "an intense fear of snakes.",
+                "learned Adobe Photoshop.",
+                "learned Adobe Illustrator.",
+                "learned Adobe Animate.",
+                "learned all the dumb Excel formulas.",
+                "the ability to swim.",
+                "ridden a bike frequently.",
+                "been in a band."
+            ];
+
             const footerQuotes = [
                 `so how do u peel a <a href="https://en.wikipedia.org/wiki/Banana" target="_blank" class="footer-link">banana</a>?`,
                 "I'm a Lando Norris fan, are you?",
@@ -1695,43 +1637,50 @@ const facts = [
                 "tell me you have a good attention span without telling me you have a good attention span"
             ];
 
-            // Pick a random line and update the DOM
             const randomQuoteIndex = Math.floor(Math.random() * footerQuotes.length);
             document.getElementById('footer-random-quote').innerHTML = footerQuotes[randomQuoteIndex];
-const factElement = document.getElementById('rotating-fact');
 
-function cycleFact() {
-    // Fade out
-    factElement.style.opacity = 0;
-    
-    setTimeout(() => {
-        // Pick a random index from the array
-        const randomIndex = Math.floor(Math.random() * facts.length);
-        factElement.textContent = facts[randomIndex];
-        // Fade back in
-        factElement.style.opacity = 1;
-    }, 200); // Matches the CSS transition delay smoothly
-}
+            // FIXED ROTATING STATEMENTS
+            const factElement = document.getElementById('rotating-fact');
+            let lastFactIndex = -1;
 
-// Run immediately for the initial load, then cycle every 3 seconds (3000ms)
-cycleFact();
-setInterval(cycleFact, 3000);
+            function cycleFact() {
+                if (!factElement) return;
+                factElement.style.opacity = "0";
+                
+                setTimeout(() => {
+                    let randomIndex;
+                    do {
+                        randomIndex = Math.floor(Math.random() * facts.length);
+                    } while (randomIndex === lastFactIndex && facts.length > 1);
+                    
+                    lastFactIndex = randomIndex;
+                    factElement.textContent = facts[randomIndex];
+                    factElement.style.opacity = "1";
+                }, 200);
+            }
+
+            setTimeout(() => {
+                cycleFact();
+                setInterval(cycleFact, 3500);
+            }, 1200);
         });
         
-function openPitchModal() {
-    const modal = document.getElementById('pitchModal');
-    modal.classList.add('active');
-    document.body.style.overflow = 'hidden';
-}
+        function openPitchModal() {
+            const modal = document.getElementById('pitchModal');
+            modal.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
 
-function closePitchModal(event) {
-    // Closes if you click the background overlay shadow, the "X" button, or the action button link
-    if (event.target.id === 'pitchModal' || event.target.classList.contains('modal-close-btn') || event.target.tagName === 'A') {
-        const modal = document.getElementById('pitchModal');
-        modal.classList.remove('active');
-        document.body.style.overflow = '';
-    }
-}
+        function closePitchModal(event) {
+            if (event.target.id === 'pitchModal' || event.target.classList.contains('modal-close-btn') || event.target.tagName === 'A') {
+                const modal = document.getElementById('pitchModal');
+                modal.classList.remove('active');
+                document.body.style.overflow = '';
+            }
+        
+        }
+        
     </script>
 
 </body>
