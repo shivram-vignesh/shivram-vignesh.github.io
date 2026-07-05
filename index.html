@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Shivram Vignesh - Writer, Student and someone who spends too much time in front of a laptop.">
-    <meta name="keywords" content="Shivram Vignesh, Writer, Student, Life In A Car, A Thread of Air">
+    <meta name="keywords" content="Shivram Vignesh, Writer, Student, Life In A Car, Here's 11 stories that sound a bit like rain">
     <meta property="og:type" content="website">
 <meta property="og:url" content="https://shivram-vignesh.github.io/"> <meta property="og:title" content="Shivram Vignesh — Writer & Student">
 <meta property="og:description" content="this is Shivram Vignesh. Someone who spends too much time in front of a laptop.">
@@ -16,6 +16,7 @@
 <script defer src="https://cloud.umami.is/script.js" data-website-id="dfb1145f-e0a6-4e91-adf1-7d1caf1f8422"></script>
     <title>Shivram Vignesh</title>
     <link rel="icon" type="image/png" href="favicon.png">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <style>
         /* Apple-inspired Modern Design System with Dynamic Background */
         :root {
@@ -713,7 +714,7 @@
             background-color: rgba(52, 199, 89, 0.08);
         }
         
-        .card-progress.planning {
+        .card-progress.published {
             color: #ff9500;
             background-color: rgba(255, 149, 0, 0.08);
         }
@@ -1147,7 +1148,16 @@ a, button, .card-action-pill, .pill-card, [style*="cursor: help"] {
         padding: 32px 24px;
     }
 }
+/* Custom styling specifically for the Amazon buttons */
+.amazon-pill {
+    transition: all 0.2s ease;
+}
 
+.amazon-pill:hover {
+    background-color: #ffffff !important;
+    color: #000000 !important;
+    border-color: #ffffff !important;
+}
     </style>
 </head>
 <body>
@@ -1221,7 +1231,7 @@ a, button, .card-action-pill, .pill-card, [style*="cursor: help"] {
 <div class="wide-status-card fade-in-content">
     <div class="status-header">And right now?</div>
     <div class="status-body">
-        <strong>I'm actually</strong> <span class="editable-status">doing an internship at <a href="https://ipoh.knewton.edu.my/" target="_blank" style="color: var(--accent-blue); text-decoration: none; border-bottom: 2px dashed var(--accent-blue); padding-bottom: 1px;">Knewton Global Schools Ipoh</a></span>
+        <strong>I've actually</strong> <span class="editable-status"> just got my <a href="https://a.co/d/0fW3NscM" target="_blank" style="color: var(--accent-blue); text-decoration: none; border-bottom: 2px dashed var(--accent-blue); padding-bottom: 1px;">second book</a> published!</span>
     </div>
 </div>
         </header>
@@ -1259,11 +1269,11 @@ a, button, .card-action-pill, .pill-card, [style*="cursor: help"] {
                             <p class="card-description">This was my first book. The protagonist goes on a cross-continental adventure in their race car.</p>
                         </div>
                         <div class="card-bottom">
-                            <span class="card-progress planning">Published</span>
-                            <a href="https://a.co/d/095JbhML" target="_blank" class="card-action-pill">
-                                View on Amazon
-                            </a>
-                        </div>
+    <span class="card-progress published">Published</span>
+    <a href="https://a.co/d/095JbhML" target="_blank" class="card-action-pill amazon-pill" style="display: flex; align-items: center; gap: 6px;">
+        <i class="fa-brands fa-amazon"></i> View on Amazon
+    </a>
+</div>
                     </div>
 
                     <a href="https://app.notion.com/p/Future-s-Eyes-3765b7b8715580fe9cfdc5447b20a94e?source=copy_link" target="_blank" class="small-rect-card story-card">
@@ -1322,15 +1332,22 @@ a, button, .card-action-pill, .pill-card, [style*="cursor: help"] {
                                 <span class="card-year">2025</span>
                                 <span class="genre-tag literary">literary</span>
                             </div>
-                            <h3 class="card-title">A Thread of Air</h3>
+                            <h3 class="card-title">Here's 11 stories that sound a bit like rain</h3>
                             <p class="card-description">A collection of short stories about people, connections and cozy atmospheres.</p>
                         </div>
                         <div class="card-bottom">
-                            <span class="card-progress completed">Completed</span>
-                            <a href="https://app.notion.com/p/A-Strange-Tune-3765b7b8715580e1a6d7e5af3db9af69?source=copy_link" target="_blank" class="card-action-pill">
-                                Read a story off the collection &rarr;
-                            </a>
-                        </div>
+    <span class="card-progress published">Just published 🎉</span>
+    
+    <div style="display: flex; gap: 8px; flex-wrap: wrap;">
+        <a href="https://a.co/d/0fW3NscM" target="_blank" class="card-action-pill amazon-pill" style="display: flex; align-items: center; gap: 6px;">
+            <i class="fa-brands fa-amazon"></i> View on Amazon
+        </a>
+        <a href="https://app.notion.com/p/A-Strange-Tune-3765b7b8715580e1a6d7e5af3db9af69?source=copy_link" target="_blank" class="card-action-pill">
+            Read a story off the collection &rarr;
+        </a>
+    </div>
+</div>
+                        
                     </div>
 
                     <a href="https://app.notion.com/p/Perfectly-Safe-3765b7b87155808cadb7dba7ad1cbc66?source=copy_link" target="_blank" class="small-rect-card">
@@ -1635,7 +1652,8 @@ a, button, .card-action-pill, .pill-card, [style*="cursor: help"] {
 
             const facts = [
                 "been a school prefect.",
-                "done an internship.",
+                "done an internship at Kareem Art & Design",
+                "done an internship at Knewton Global Schools Ipoh",
                 "been an MC.",
                 "no camera fear.",
                 "minimal stage fear.",
