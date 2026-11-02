@@ -338,6 +338,31 @@ h1 .zz { font-size: .5em; margin-left: .2em; vertical-align: .35em; cursor: help
 .section-title { font-size: 30px; font-weight: 700; letter-spacing: -.04em; line-height: 1.1; }
 
 /* =====================================================================
+   WORD COUNTER — hover (or tap) "Writing Projects." and a pill rises
+   above it with every word on record, rolling up like an odometer.
+   ===================================================================== */
+.wc-head { position: relative; }
+.wc-trigger { font: inherit; letter-spacing: inherit; color: inherit; cursor: url('arrow.png'), help; border-radius: 10px; padding: 0 4px; }
+.wc-trigger .dot { display: inline-block; transition: color .3s ease, transform .4s var(--ease); }
+.wc-trigger:hover .dot, .wc-trigger[aria-expanded="true"] .dot { color: var(--blue); transform: scale(1.4); }
+.wc {
+  position: absolute; left: 50%; bottom: calc(100% + 14px); z-index: 5;
+  display: inline-flex; align-items: baseline; gap: 9px; white-space: nowrap;
+  padding: 10px 18px 11px; border-radius: 999px;
+  opacity: 0; transform: translate(-50%, 8px) scale(.96); pointer-events: none;
+  transition: opacity .3s ease, transform .5s var(--ease);
+}
+.wc.show { opacity: 1; transform: translate(-50%, 0) scale(1); }
+.wc .num { display: inline-flex; font-size: 22px; font-weight: 700; letter-spacing: -.03em; line-height: 1; font-variant-numeric: tabular-nums; color: var(--ink); }
+.wc .plus { color: var(--blue); }
+.wc .label { font-size: 13.5px; font-weight: 500; color: var(--ink-3); letter-spacing: -.01em; }
+/* odometer: each digit is a column of 0–9 that slides to its value */
+.wc .col { display: inline-block; height: 1em; overflow: hidden; }
+.wc .col span { display: flex; flex-direction: column; transition: transform 1.4s var(--ease); transition-delay: calc(var(--d) * 60ms); }
+.wc .col span i { font-style: normal; height: 1em; line-height: 1; }
+@media (max-width: 420px) { .wc { padding: 9px 14px; gap: 7px; } .wc .num { font-size: 19px; } .wc .label { font-size: 12.5px; } }
+
+/* =====================================================================
    PROJECT GRID
    ===================================================================== */
 .grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); grid-template-rows: 1fr auto; gap: 16px; }
@@ -655,8 +680,13 @@ dialog[open]::backdrop { animation: fade .4s ease; }
   </header>
 
   <main class="reveal-later">
-    <div class="section-head" id="writing">
-      <h2 class="section-title">Writing Projects.</h2>
+    <div class="section-head wc-head" id="writing">
+      <h2 class="section-title"><button class="wc-trigger" type="button" id="wcTrigger" aria-expanded="false" aria-controls="wc">Writing Projects<span class="dot">.</span></button></h2>
+      <div class="wc glass" id="wc" role="status" aria-live="polite">
+        <span class="num" id="wcNum" aria-hidden="true"></span>
+        <span class="label">words written. Probably more.</span>
+        <span class="sr-only" id="wcSr"></span>
+      </div>
     </div>
 
     <div class="grid" id="grid">
@@ -781,6 +811,10 @@ const DATA = {
 
   // the novel in progress
   novel: { words: 4189, latestLine: 'Sofia entered their apartment.' },
+
+  // Every word on record, shown when you hover "Writing Projects."
+  // The real total is higher, so it always shows a "+".
+  wordsWritten: 66699,
 
   // First couple of lines of the secret draft, shown blurred on hover.
   // Leave empty and it shows blurred placeholder lines instead.
@@ -997,6 +1031,35 @@ function renderNovel() {
   $('#peek-line').textContent = `“${DATA.novel.latestLine}”`;
 }
 
+/* Word counter: digits roll up from 0 each time it opens */
+function wireWordCounter() {
+  const btn = $('#wcTrigger'), pill = $('#wc'), num = $('#wcNum');
+  const text = DATA.wordsWritten.toLocaleString('en-US');
+  let d = 0;
+  num.innerHTML = [...text].map(ch => /\d/.test(ch)
+    ? `<span class="col"><span style="--d:${d++}">${'0123456789'.split('').map(n => `<i>${n}</i>`).join('')}</span></span>`
+    : `<span>${ch}</span>`).join('') + '<span class="plus">+</span>';
+  const cols = [...num.querySelectorAll('.col > span')];
+  const digits = text.replace(/\D/g, '');
+  const roll = on => cols.forEach((c, i) => c.style.transform = `translateY(-${on ? +digits[i] : 0}em)`);
+  let open = false, pinned = false;
+  const set = v => {
+    if (v === open) return; open = v;
+    pill.classList.toggle('show', v);
+    btn.setAttribute('aria-expanded', String(v));
+    $('#wcSr').textContent = v ? `${text} plus words written` : '';
+    if (reduced) { roll(v); return; }
+    if (v) requestAnimationFrame(() => requestAnimationFrame(() => roll(true)));
+    else setTimeout(() => { if (!open) roll(false); }, 300);   // reset after it fades
+  };
+  btn.addEventListener('pointerenter', e => { if (e.pointerType === 'mouse') set(true); });
+  btn.addEventListener('pointerleave', e => { if (e.pointerType === 'mouse' && !pinned) set(false); });
+  btn.addEventListener('focus', () => set(true));
+  btn.addEventListener('blur', () => { pinned = false; set(false); });
+  btn.addEventListener('click', () => { pinned = !pinned || !open; set(pinned); });   // tap on phones
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') { pinned = false; set(false); } });
+}
+
 function renderTease() {
   const t = DATA.draftTeaser.trim();
   $('#tease').innerHTML = t ? `<span class="tx">${esc(t)}</span>` : '<span class="bars"><i></i><i></i><i></i><i></i></span>';
@@ -1113,6 +1176,7 @@ renderTicker();
 renderStories();
 renderBento();
 renderNovel();
+wireWordCounter();
 renderTease();
 loadObsession();
 wireFallbacks();
